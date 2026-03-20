@@ -287,6 +287,21 @@ h2.sec-title em{font-style:italic;color:var(--accent);}
 }
 .preview-blocked-desc{font-size:12px;color:var(--dim);line-height:1.7;}
  
+.preview-noembed{
+  display:none;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:60px 40px;text-align:center;
+}
+.preview-noembed-icon{font-size:40px;margin-bottom:16px;}
+.preview-noembed-title{
+  font-family:'DM Serif Display',serif;
+  font-size:22px;color:var(--cream);margin-bottom:10px;
+}
+.preview-noembed-desc{
+  font-size:13px;color:var(--dim);
+  line-height:1.75;max-width:440px;
+}
+ 
 /* FOOTER */
 footer{background:var(--card-dk);border-top:1px solid var(--border);padding:28px 36px;display:flex;align-items:center;justify-content:space-between;}
 .foot-logo{font-family:'DM Serif Display',serif;font-size:16px;color:var(--cream);}
@@ -428,7 +443,7 @@ footer{background:var(--card-dk);border-top:1px solid var(--border);padding:28px
   <!-- Card grid -->
   <div class="port-grid">
  
-    <div class="port-card port-card-wide fi" onclick="openPreview('https://360.articulate.com/review/content/144484bb-27cc-49a8-9cb0-2fd3ae0fd04f/review','Interactive E-Learning Module I','Articulate Storyline 360 · E-Learning')">
+    <div class="port-card port-card-wide fi" onclick="openPreview('noembed','Interactive E-Learning Module I','Articulate Storyline 360 · E-Learning','https://360.articulate.com/review/content/144484bb-27cc-49a8-9cb0-2fd3ae0fd04f/review')">
       <div class="port-thumb"><img src="thumb-storyline1.jpg" alt="Storyline Module I"/><div class="port-thumb-overlay"><div class="port-thumb-arrow" style="font-size:13px;">▶ Preview</div></div></div>
       <div class="port-info">
         <div class="port-cat">Articulate Storyline 360 · E-Learning</div>
@@ -438,7 +453,7 @@ footer{background:var(--card-dk);border-top:1px solid var(--border);padding:28px
       </div>
     </div>
  
-    <div class="port-card fi" onclick="openPreview('https://360.articulate.com/review/content/9ef28edb-e33c-450f-840e-1398d2c7eb81/review','Interactive E-Learning Module II','Articulate Storyline 360 · E-Learning')">
+    <div class="port-card fi" onclick="openPreview('noembed','Interactive E-Learning Module II','Articulate Storyline 360 · E-Learning','https://360.articulate.com/review/content/9ef28edb-e33c-450f-840e-1398d2c7eb81/review')">
       <div class="port-thumb"><img src="thumb-storyline2.jpg" alt="Storyline Module II"/><div class="port-thumb-overlay"><div class="port-thumb-arrow" style="font-size:13px;">▶ Preview</div></div></div>
       <div class="port-info">
         <div class="port-cat">Articulate Storyline 360 · E-Learning</div>
@@ -448,7 +463,7 @@ footer{background:var(--card-dk);border-top:1px solid var(--border);padding:28px
       </div>
     </div>
  
-    <div class="port-card fi" onclick="openPreview('https://drive.google.com/drive/folders/1kAZS_e1vcH3RHzYYxlaPC2T0r-hEDrNh?usp=sharing','Job Aid Collection','Google Drive · Job Aids')">
+    <div class="port-card fi" onclick="openPreview('noembed','Job Aid Collection','Google Drive · Job Aids','https://drive.google.com/drive/folders/1kAZS_e1vcH3RHzYYxlaPC2T0r-hEDrNh?usp=sharing')">
       <div class="port-thumb"><img src="thumb-jobaid.jpg" alt="Job Aid Collection"/><div class="port-thumb-overlay"><div class="port-thumb-arrow" style="font-size:13px;">▶ Preview</div></div></div>
       <div class="port-info">
         <div class="port-cat">Google Drive · Job Aids</div>
@@ -458,7 +473,7 @@ footer{background:var(--card-dk);border-top:1px solid var(--border);padding:28px
       </div>
     </div>
  
-    <div class="port-card fi" onclick="openPreview('https://drive.google.com/drive/folders/12pddV1wJacDIlMerJUiOf0SHPTyw-GB4?usp=sharing','Character &amp; Drawing Portfolio','Digital Art · Character Design')">
+    <div class="port-card fi" onclick="openPreview('noembed','Character &amp; Drawing Portfolio','Digital Art · Character Design','https://drive.google.com/drive/folders/12pddV1wJacDIlMerJUiOf0SHPTyw-GB4?usp=sharing')">
       <div class="port-thumb"><img src="thumb-illustration.jpg" alt="Illustration Portfolio"/><div class="port-thumb-overlay"><div class="port-thumb-arrow" style="font-size:13px;">▶ Preview</div></div></div>
       <div class="port-info">
         <div class="port-cat">Digital Art · Character Design</div>
@@ -478,7 +493,7 @@ footer{background:var(--card-dk);border-top:1px solid var(--border);padding:28px
       </div>
     </div>
  
-    <div class="port-card fi" onclick="openPreview('https://drive.google.com/drive/folders/1MwjzE1AfLwrgH-YB63MGx04SGTMfghMd?usp=sharing','Video Learning Content','Video · Synthesia · Motion')">
+    <div class="port-card fi" onclick="openPreview('noembed','Video Learning Content','Video · Synthesia · Motion','https://drive.google.com/drive/folders/1MwjzE1AfLwrgH-YB63MGx04SGTMfghMd?usp=sharing')">
       <div class="port-thumb"><img src="thumb-video.jpg" alt="Video Content"/><div class="port-thumb-overlay"><div class="port-thumb-arrow" style="font-size:13px;">▶ Preview</div></div></div>
       <div class="port-info">
         <div class="port-cat">Video · Synthesia · Motion</div>
@@ -514,6 +529,12 @@ footer{background:var(--card-dk);border-top:1px solid var(--border);padding:28px
       <div class="preview-blocked-title">Preview blocked by this site</div>
       <div class="preview-blocked-desc">This content can't be embedded — click the button below to open it directly.</div>
       <a id="previewBlockedLink" href="#" target="_blank" class="btn btn-fill" style="margin-top:16px;">Open in new tab ↗</a>
+    </div>
+    <div class="preview-noembed" id="previewNoembed" style="display:none;">
+      <div class="preview-noembed-icon" id="previewNoembedIcon">🎓</div>
+      <div class="preview-noembed-title" id="previewNoembedTitle">This module lives on Articulate Review</div>
+      <div class="preview-noembed-desc" id="previewNoembedDesc">The full experience is just one click away.</div>
+      <a id="previewNoembedLink" href="#" target="_blank" class="btn btn-fill" style="margin-top:20px;"><span id="previewNoembedBtn">Open ↗</span></a>
     </div>
   </div>
  
@@ -653,24 +674,57 @@ window.addEventListener('scroll',()=>{
   links.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active');});
 });
  
-function openPreview(url, title, cat) {
+function openPreview(url, title, cat, fallback) {
   const panel = document.getElementById('previewPanel');
   const frame = document.getElementById('previewFrame');
   const loading = document.getElementById('previewLoading');
   const blocked = document.getElementById('previewBlocked');
+  const noembedEl = document.getElementById('previewNoembed');
+  const extUrl = fallback || url;
+ 
   document.getElementById('previewTitle').textContent = title;
   document.getElementById('previewCat').textContent = cat;
-  document.getElementById('previewExtLink').href = url;
-  document.getElementById('previewBlockedLink').href = url;
+  document.getElementById('previewExtLink').href = extUrl;
+  document.getElementById('previewBlockedLink').href = extUrl;
+  document.getElementById('previewNoembedLink').href = extUrl;
   panel.classList.add('open');
-  loading.style.display = 'flex';
-  blocked.style.display = 'none';
-  frame.style.display = 'block';
-  frame.src = '';
-  setTimeout(()=>{ frame.src = url; }, 80);
   setTimeout(()=>panel.scrollIntoView({behavior:'smooth', block:'start'}), 120);
-  frame.onload = ()=>{ loading.style.display = 'none'; };
-  setTimeout(()=>{ loading.style.display = 'none'; }, 7000);
+ 
+  if (url === 'noembed') {
+    const isArticulate = cat.toLowerCase().includes('articulate') || cat.toLowerCase().includes('e-learning');
+    document.getElementById('previewNoembedIcon').textContent = isArticulate ? '🎓' : '📁';
+    document.getElementById('previewNoembedTitle').textContent = isArticulate
+      ? 'This module lives on Articulate Review'
+      : 'This collection lives on Google Drive';
+    document.getElementById('previewNoembedDesc').textContent = isArticulate
+      ? "Articulate Review is an interactive platform that can't be embedded — but the full experience is just one click away. You'll be able to interact with all the branching scenarios, animations, and knowledge checks directly."
+      : 'This portfolio collection is hosted on Google Drive. Click below to browse all the files, images, and documents in full.';
+    document.getElementById('previewNoembedBtn').textContent = isArticulate
+      ? 'Open Interactive Module ↗'
+      : 'Open in Google Drive ↗';
+    loading.style.display = 'none';
+    blocked.style.display = 'none';
+    frame.style.display = 'none';
+    noembedEl.style.display = 'flex';
+  } else {
+    loading.style.display = 'flex';
+    blocked.style.display = 'none';
+    noembedEl.style.display = 'none';
+    frame.style.display = 'block';
+    frame.src = '';
+    setTimeout(()=>{ frame.src = url; }, 80);
+    frame.onload = ()=>{ loading.style.display = 'none'; };
+    setTimeout(()=>{ loading.style.display = 'none'; }, 7000);
+  }
+}
+    blocked.style.display = 'none';
+    noembedEl.style.display = 'none';
+    frame.style.display = 'block';
+    frame.src = '';
+    setTimeout(()=>{ frame.src = url; }, 80);
+    frame.onload = ()=>{ loading.style.display = 'none'; };
+    setTimeout(()=>{ loading.style.display = 'none'; }, 7000);
+  }
 }
  
 function closePreview() {
