@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -206,6 +205,88 @@ h2.sec-title em{font-style:italic;color:var(--accent);}
 .exp-bullets li{font-size:12px;color:var(--dim);line-height:1.7;padding-left:14px;position:relative;}
 .exp-bullets li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:9px;top:3px;}
 
+/* PREVIEW PANEL */
+.port-card{cursor:pointer;}
+.preview-panel{
+  display:none;
+  margin-top:20px;
+  border-radius:var(--radius);
+  border:1.5px solid var(--accent);
+  background:var(--card-dk);
+  box-shadow:0 8px 40px rgba(0,0,0,0.6);
+  overflow:hidden;
+  animation:slideDown 0.3s ease;
+}
+@keyframes slideDown{from{opacity:0;transform:translateY(-12px);}to{opacity:1;transform:translateY(0);}}
+.preview-panel.open{display:block;}
+
+.preview-panel-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 22px;
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+}
+.preview-panel-cat{
+  font-family:'Space Mono',monospace;font-size:8px;
+  letter-spacing:0.13em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:4px;
+}
+.preview-panel-title{
+  font-family:'DM Serif Display',serif;
+  font-size:18px;color:var(--cream);
+}
+.preview-panel-actions{display:flex;align-items:center;gap:10px;}
+.preview-close{
+  font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:8px 16px;border-radius:50px;
+  background:transparent;color:var(--dim);
+  border:1px solid var(--border);cursor:pointer;
+  transition:border-color 0.2s,color 0.2s;
+}
+.preview-close:hover{border-color:var(--cream);color:var(--cream);}
+
+.preview-frame-wrap{
+  position:relative;
+  width:100%;
+  padding-top:56.25%; /* 16:9 */
+}
+.preview-frame-wrap iframe{
+  position:absolute;
+  top:0;left:0;width:100%;height:100%;
+  border:none;
+  background:var(--card-dk);
+}
+
+.preview-loading{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:14px;background:var(--card-dk);z-index:2;
+}
+.preview-spinner{
+  width:32px;height:32px;
+  border:2px solid var(--border);
+  border-top-color:var(--accent);
+  border-radius:50%;
+  animation:spin 0.8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+.preview-loading-text{
+  font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);
+}
+
+.preview-blocked{
+  padding:60px 40px;text-align:center;
+}
+.preview-blocked-icon{font-size:32px;margin-bottom:12px;}
+.preview-blocked-title{
+  font-family:'DM Serif Display',serif;
+  font-size:20px;color:var(--cream);margin-bottom:8px;
+}
+.preview-blocked-desc{font-size:12px;color:var(--dim);line-height:1.7;}
+
 /* FOOTER */
 footer{background:var(--card-dk);border-top:1px solid var(--border);padding:28px 36px;display:flex;align-items:center;justify-content:space-between;}
 .foot-logo{font-family:'DM Serif Display',serif;font-size:16px;color:var(--cream);}
@@ -343,69 +424,99 @@ footer{background:var(--card-dk);border-top:1px solid var(--border);padding:28px
     <div><div class="sec-eyebrow">Selected Work</div><h2 class="sec-title">Portfolio &amp;<br><em>Projects</em></h2></div>
     <span class="pill">6 pieces</span>
   </div>
+
+  <!-- Card grid -->
   <div class="port-grid">
 
-    <a href="https://360.articulate.com/review/content/144484bb-27cc-49a8-9cb0-2fd3ae0fd04f/review" target="_blank" class="port-card port-card-wide fi">
-      <div class="port-thumb"><img src="thumb-storyline1.jpg" alt="Storyline Module I"/><div class="port-thumb-overlay"><div class="port-thumb-arrow">↗</div></div></div>
+    <div class="port-card port-card-wide fi" onclick="openPreview('https://360.articulate.com/review/content/144484bb-27cc-49a8-9cb0-2fd3ae0fd04f/review','Interactive E-Learning Module I','Articulate Storyline 360 · E-Learning')">
+      <div class="port-thumb"><img src="thumb-storyline1.jpg" alt="Storyline Module I"/><div class="port-thumb-overlay"><div class="port-thumb-arrow" style="font-size:13px;">▶ Preview</div></div></div>
       <div class="port-info">
         <div class="port-cat">Articulate Storyline 360 · E-Learning</div>
         <div class="port-title">Interactive E-Learning Module I</div>
-        <div class="port-desc">Full Storyline 360 course with branching scenarios, drag-and-drop interactions, and animated sequences for adult learners in a contact center environment.</div>
-        <div class="port-link">View on Articulate Review</div>
+        <div class="port-desc">Full Storyline 360 course with branching scenarios, drag-and-drop interactions, and animated sequences for adult learners.</div>
+        <div class="port-link">Click to preview</div>
       </div>
-    </a>
+    </div>
 
-    <a href="https://360.articulate.com/review/content/9ef28edb-e33c-450f-840e-1398d2c7eb81/review" target="_blank" class="port-card fi">
-      <div class="port-thumb"><img src="thumb-storyline2.jpg" alt="Storyline Module II"/><div class="port-thumb-overlay"><div class="port-thumb-arrow">↗</div></div></div>
+    <div class="port-card fi" onclick="openPreview('https://360.articulate.com/review/content/9ef28edb-e33c-450f-840e-1398d2c7eb81/review','Interactive E-Learning Module II','Articulate Storyline 360 · E-Learning')">
+      <div class="port-thumb"><img src="thumb-storyline2.jpg" alt="Storyline Module II"/><div class="port-thumb-overlay"><div class="port-thumb-arrow" style="font-size:13px;">▶ Preview</div></div></div>
       <div class="port-info">
         <div class="port-cat">Articulate Storyline 360 · E-Learning</div>
         <div class="port-title">Interactive Module II</div>
         <div class="port-desc">Advanced triggers, custom UI, branching logic and knowledge checks — showcasing interactive design depth.</div>
-        <div class="port-link">View on Articulate</div>
+        <div class="port-link">Click to preview</div>
       </div>
-    </a>
+    </div>
 
-    <a href="https://drive.google.com/drive/folders/1kAZS_e1vcH3RHzYYxlaPC2T0r-hEDrNh?usp=drive_link" target="_blank" class="port-card fi">
-      <div class="port-thumb"><img src="thumb-jobaid.jpg" alt="Job Aid Collection"/><div class="port-thumb-overlay"><div class="port-thumb-arrow">↗</div></div></div>
+    <div class="port-card fi" onclick="openPreview('https://drive.google.com/drive/folders/1kAZS_e1vcH3RHzYYxlaPC2T0r-hEDrNh?usp=sharing','Job Aid Collection','Google Drive · Job Aids')">
+      <div class="port-thumb"><img src="thumb-jobaid.jpg" alt="Job Aid Collection"/><div class="port-thumb-overlay"><div class="port-thumb-arrow" style="font-size:13px;">▶ Preview</div></div></div>
       <div class="port-info">
         <div class="port-cat">Google Drive · Job Aids</div>
         <div class="port-title">Job Aid Collection</div>
         <div class="port-desc">Performance support materials and quick-reference guides designed for frontline teams — clear, scannable, visually on-brand.</div>
-        <div class="port-link">View on Drive</div>
+        <div class="port-link">Click to preview</div>
       </div>
-    </a>
+    </div>
 
-    <a href="https://drive.google.com/drive/folders/12pddV1wJacDIlMerJUiOf0SHPTyw-GB4?usp=drive_link" target="_blank" class="port-card fi">
-      <div class="port-thumb"><img src="thumb-illustration.jpg" alt="Illustration Portfolio"/><div class="port-thumb-overlay"><div class="port-thumb-arrow">↗</div></div></div>
+    <div class="port-card fi" onclick="openPreview('https://drive.google.com/drive/folders/12pddV1wJacDIlMerJUiOf0SHPTyw-GB4?usp=sharing','Character &amp; Drawing Portfolio','Digital Art · Character Design')">
+      <div class="port-thumb"><img src="thumb-illustration.jpg" alt="Illustration Portfolio"/><div class="port-thumb-overlay"><div class="port-thumb-arrow" style="font-size:13px;">▶ Preview</div></div></div>
       <div class="port-info">
         <div class="port-cat">Digital Art · Character Design</div>
         <div class="port-title">Character &amp; Drawing Portfolio</div>
         <div class="port-desc">Original character designs, fan art, manga-style illustrations, and apparel graphics spanning a decade of creative digital work.</div>
-        <div class="port-link">View on Drive</div>
+        <div class="port-link">Click to preview</div>
       </div>
-    </a>
+    </div>
 
-    <a href="https://docs.google.com/presentation/d/11UY19KGLY78uio7ge9rY3Z47kLd2zo1O/edit?usp=drive_link" target="_blank" class="port-card fi">
-      <div class="port-thumb"><img src="thumb-slides.jpg" alt="PPT Deck"/><div class="port-thumb-overlay"><div class="port-thumb-arrow">↗</div></div></div>
+    <div class="port-card fi" onclick="openPreview('https://docs.google.com/presentation/d/11UY19KGLY78uio7ge9rY3Z47kLd2zo1O/preview','Storyline PPT Deck','PowerPoint · Presentation Design')">
+      <div class="port-thumb"><img src="thumb-slides.jpg" alt="PPT Deck"/><div class="port-thumb-overlay"><div class="port-thumb-arrow" style="font-size:13px;">▶ Preview</div></div></div>
       <div class="port-info">
         <div class="port-cat">PowerPoint · Presentation Design</div>
         <div class="port-title">Storyline PPT Deck</div>
         <div class="port-desc">Custom layouts, branded graphics, and strong visual hierarchy designed to support instructor-led training delivery.</div>
-        <div class="port-link">Open in Slides</div>
+        <div class="port-link">Click to preview</div>
       </div>
-    </a>
+    </div>
 
-    <a href="https://drive.google.com/drive/folders/1MwjzE1AfLwrgH-YB63MGx04SGTMfghMd?usp=drive_link" target="_blank" class="port-card fi">
-      <div class="port-thumb"><img src="thumb-video.jpg" alt="Video Content"/><div class="port-thumb-overlay"><div class="port-thumb-arrow">↗</div></div></div>
+    <div class="port-card fi" onclick="openPreview('https://drive.google.com/drive/folders/1MwjzE1AfLwrgH-YB63MGx04SGTMfghMd?usp=sharing','Video Learning Content','Video · Synthesia · Motion')">
+      <div class="port-thumb"><img src="thumb-video.jpg" alt="Video Content"/><div class="port-thumb-overlay"><div class="port-thumb-arrow" style="font-size:13px;">▶ Preview</div></div></div>
       <div class="port-info">
         <div class="port-cat">Video · Synthesia · Motion</div>
         <div class="port-title">Video Learning Content</div>
         <div class="port-desc">AI-generated and animated video modules built with Synthesia — microlearning delivered at scale with a human, engaging feel.</div>
-        <div class="port-link">View on Drive</div>
+        <div class="port-link">Click to preview</div>
       </div>
-    </a>
+    </div>
 
   </div>
+
+  <!-- ── PREVIEW PANEL ── -->
+  <div class="preview-panel" id="previewPanel">
+    <div class="preview-panel-header">
+      <div>
+        <div class="preview-panel-cat" id="previewCat"></div>
+        <div class="preview-panel-title" id="previewTitle"></div>
+      </div>
+      <div class="preview-panel-actions">
+        <a id="previewExtLink" href="#" target="_blank" class="btn btn-outline" style="font-size:9px;padding:8px 16px;">Open full ↗</a>
+        <button class="preview-close" onclick="closePreview()">✕ Close</button>
+      </div>
+    </div>
+    <div class="preview-frame-wrap">
+      <div class="preview-loading" id="previewLoading">
+        <div class="preview-spinner"></div>
+        <div class="preview-loading-text">Loading preview…</div>
+      </div>
+      <iframe id="previewFrame" src="" allowfullscreen allow="autoplay"></iframe>
+    </div>
+    <div class="preview-blocked" id="previewBlocked" style="display:none;">
+      <div class="preview-blocked-icon">🔒</div>
+      <div class="preview-blocked-title">Preview blocked by this site</div>
+      <div class="preview-blocked-desc">This content can't be embedded — click the button below to open it directly.</div>
+      <a id="previewBlockedLink" href="#" target="_blank" class="btn btn-fill" style="margin-top:16px;">Open in new tab ↗</a>
+    </div>
+  </div>
+
 </section>
 
 <!-- GALLERY STRIP -->
@@ -451,9 +562,9 @@ footer{background:var(--card-dk);border-top:1px solid var(--border);padding:28px
       <div class="card card-contact-info fi" id="contact">
         <div class="contact-title">get in touch</div>
         <div class="contact-rows">
-          <a href="mailto:mrs.pnon@gmail.com" class="contact-row-item">
+          <a href="/cdn-cgi/l/email-protection#d4b9a6a7faa4babbba94b3b9b5bdb8fab7bbb9" class="contact-row-item">
             <div class="contact-icon-box">✉</div>
-            <div><div class="contact-row-label">Email</div><div class="contact-row-val">mrs.pnon@gmail.com</div></div>
+            <div><div class="contact-row-label">Email</div><div class="contact-row-val"><span class="__cf_email__" data-cfemail="d2bfa0a1fca2bcbdbc92b5bfb3bbbefcb1bdbf">[email&#160;protected]</span></div></div>
           </a>
           <a href="tel:+639985612785" class="contact-row-item">
             <div class="contact-icon-box">☏</div>
@@ -541,6 +652,29 @@ window.addEventListener('scroll',()=>{
   secs.forEach(s=>{if(window.scrollY>=s.offsetTop-130)cur=s.id;});
   links.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active');});
 });
-</script>
-</body>
-</html>
+
+function openPreview(url, title, cat) {
+  const panel = document.getElementById('previewPanel');
+  const frame = document.getElementById('previewFrame');
+  const loading = document.getElementById('previewLoading');
+  const blocked = document.getElementById('previewBlocked');
+  document.getElementById('previewTitle').textContent = title;
+  document.getElementById('previewCat').textContent = cat;
+  document.getElementById('previewExtLink').href = url;
+  document.getElementById('previewBlockedLink').href = url;
+  panel.classList.add('open');
+  loading.style.display = 'flex';
+  blocked.style.display = 'none';
+  frame.style.display = 'block';
+  frame.src = '';
+  setTimeout(()=>{ frame.src = url; }, 80);
+  setTimeout(()=>panel.scrollIntoView({behavior:'smooth', block:'start'}), 120);
+  frame.onload = ()=>{ loading.style.display = 'none'; };
+  setTimeout(()=>{ loading.style.display = 'none'; }, 7000);
+}
+
+function closePreview() {
+  const panel = document.getElementById('previewPanel');
+  panel.classList.remove('open');
+  document.getElementById('previewFrame').src = '';
+}
