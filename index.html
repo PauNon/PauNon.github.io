@@ -543,7 +543,7 @@ footer{background:var(--card-dk);border-top:1px solid var(--border);padding:28px
     </div>
     <div class="preview-noembed" id="previewNoembed" style="display:none;">
       <div class="preview-noembed-icon" id="previewNoembedIcon">🎓</div>
-      <div class="preview-noembed-title" id="previewNoembedTitle">This module lives on Articulate Review</div>
+      <div class="preview-noembed-title" id="previewNoembedTitle">Waiting for you on Articulate Review — click in.</div>
       <div class="preview-noembed-desc" id="previewNoembedDesc">The full experience is just one click away.</div>
       <a id="previewNoembedLink" href="#" target="_blank" class="btn btn-fill" style="margin-top:20px;"><span id="previewNoembedBtn">Open ↗</span></a>
     </div>
@@ -705,7 +705,7 @@ function openPreview(url, title, cat, fallback) {
     const isArticulate = cat.toLowerCase().includes('articulate') || cat.toLowerCase().includes('e-learning');
     document.getElementById('previewNoembedIcon').textContent = isArticulate ? '🎓' : '📁';
     document.getElementById('previewNoembedTitle').textContent = isArticulate
-      ? 'This module lives on Articulate Review'
+      ? 'Waiting for you on Articulate Review — click in.'
       : 'This collection lives on Google Drive';
     document.getElementById('previewNoembedDesc').textContent = isArticulate
       ? "Articulate Review is an interactive platform that can't be embedded — but the full experience is just one click away. You'll be able to interact with all the branching scenarios, animations, and knowledge checks directly."
