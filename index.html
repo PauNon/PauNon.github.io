@@ -340,6 +340,15 @@ footer{background:var(--card-dk);border-top:1px solid var(--border);padding:28px
   footer{flex-direction:column;gap:14px;text-align:center;}
   .gallery-strip{padding:36px 18px;}
 }
+  <section class="hero" id="hero">
+
+  <!-- ✅ ADD THIS (Block 1) -->
+  <div class="pkn-hero-gradient" aria-hidden="true"></div>
+  <div class="pkn-hero-grain" aria-hidden="true"></div>
+  <div class="pkn-hero-scanline" aria-hidden="true"></div>
+
+  <!-- keep everything below unchanged -->
+  <div class="hero-left">
 </style>
 </head>
 <body>
@@ -366,6 +375,13 @@ footer{background:var(--card-dk);border-top:1px solid var(--border);padding:28px
 
 <!-- ═══ HERO ═══ -->
 <section class="hero" id="hero">
+
+  <!-- ✅ ADD THIS (Block 1) -->
+  <div class="pkn-hero-gradient" aria-hidden="true"></div>
+  <div class="pkn-hero-grain" aria-hidden="true"></div>
+  <div class="pkn-hero-scanline" aria-hidden="true"></div>
+
+  <!-- keep everything below unchanged -->
   <div class="hero-left">
 
     <div class="card card-name fi">
@@ -738,5 +754,45 @@ function closePreview() {
 }
 
 </script>
+  <!-- PASTE BLOCK 3 HERE -->
+    <script>
+      (function () {
+        ... parallax code ...
+      }());
+    </script>
+
+  </body>
+</html>
+```
+
+---
+
+## Quick visual map:
+```
+index.html
+─────────────────────────────────
+<head>
+  <link rel="stylesheet" href="style.css">   ← your CSS loads here
+</head>
+<body>
+
+  <section id="hero">
+    ← BLOCK 1 goes here (the divs)
+    
+    ...your existing hero content...
+  </section>
+
+  ...rest of your page...
+
+  ← BLOCK 3 goes here (the JS)
+</body>
+─────────────────────────────────
+
+style.css
+─────────────────────────────────
+...your existing styles...
+
+← BLOCK 2 goes here (at the bottom)
+─────────────────────────────────
 </body>
 </html>
