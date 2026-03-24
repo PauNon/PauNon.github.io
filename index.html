@@ -1,538 +1,141 @@
-# Portfolio Enhancements
-
----
-
-## PART 1 — HTML ADDITIONS
-
-### A) Hero canvas — first child inside `#hero`
-```html
-<canvas id="hero-canvas" aria-hidden="true"></canvas>
-```
-
-### B) Role toggle — paste AFTER the two hero buttons (after `[Get in Touch](#contact)` / `.hero-cta` / `.hero-buttons`, whichever wraps them)
-```html
+<canvas id="hero-canvas"></canvas>
 <div class="role-toggle" id="role-toggle">
   <button class="role-btn active" data-role="idd">Instructional Designer</button>
   <button class="role-btn" data-role="art">Graphic Artist</button>
 </div>
-```
-
-### C) Sketchbook section — add `id="sketchbook"` to the existing sketchbook section.
-Find the element that contains "from the sketchbook" and ensure it has:
-```html
-id="sketchbook"
-```
-Then at the TOP of that section's inner content (before the grid of thumbnail links), add:
-```html
 <div class="sketchbook-pdf-block">
-  <iframe
-    class="sketchbook-pdf"
-    src="assets/illustrations.pdf"
-    title="Illustration Portfolio PDF"
-    loading="lazy"
-  ></iframe>
-  <a
-    class="sketchbook-drive-link"
-    href="https://drive.google.com/drive/folders/12pddV1wJacDIlMerJUiOf0SHPTyw-GB4?usp=drive_link"
-    target="_blank"
-    rel="noopener"
-  >View full portfolio on Google Drive ↗</a>
+  <iframe src="assets/illustrations.pdf"></iframe>
+  <a href="https://drive.google.com/drive/folders/12pddV1wJacDIlMerJUiOf0SHPTyw-GB4" target="_blank">
+    View full portfolio →
+  </a>
 </div>
-```
-
-### D) Rock Paper Scissors — paste as a NEW `<section>` IMMEDIATELY AFTER the closing tag of `#portfolio`
-```html
-<section id="rps-game" class="fade-section">
-  <div class="rps-inner">
-    <h2 class="rps-title">Quick Game <em>✦</em></h2>
-    <p class="rps-sub">Rock, Paper, or Scissors?</p>
-    <div class="rps-buttons">
-      <button class="rps-btn" data-choice="rock">🪨<span>Rock</span></button>
-      <button class="rps-btn" data-choice="paper">📄<span>Paper</span></button>
-      <button class="rps-btn" data-choice="scissors">✂️<span>Scissors</span></button>
-    </div>
-    <div class="rps-result" id="rps-result" aria-live="polite">
-      <div class="rps-choices">
-        <div class="rps-choice-block">
-          <span class="rps-label">You</span>
-          <span class="rps-icon" id="rps-user-icon">—</span>
-        </div>
-        <div class="rps-vs">vs</div>
-        <div class="rps-choice-block">
-          <span class="rps-label">CPU</span>
-          <span class="rps-icon" id="rps-cpu-icon">—</span>
-        </div>
-      </div>
-      <p class="rps-verdict" id="rps-verdict"></p>
-    </div>
+<section id="rps-game">
+  <h2>Quick Game</h2>
+  <div class="rps-buttons">
+    <button class="rps-btn" data-choice="rock">🪨</button>
+    <button class="rps-btn" data-choice="paper">📄</button>
+    <button class="rps-btn" data-choice="scissors">✂️</button>
   </div>
+  <p id="rps-result"></p>
 </section>
-```
-
----
-
-## PART 2 — CSS
-Paste into your `<style>` block or a `<style>` tag before `</head>`.
-
-```css
-/* ── Global ─────────────────────────────────────────── */
-html { scroll-behavior: smooth; }
-
-/* ── Fade-in on scroll ───────────────────────────────── */
-.fade-section {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.55s ease, transform 0.55s ease;
-}
-.fade-section.visible {
-  opacity: 1;
-  transform: none;
-}
-
-/* ── Hero Canvas ─────────────────────────────────────── */
 #hero {
   position: relative;
   overflow: hidden;
 }
+
 #hero-canvas {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
   z-index: 0;
-  pointer-events: none;
 }
-#hero > *:not(#hero-canvas) {
+
+#hero > * {
   position: relative;
   z-index: 1;
 }
 
-/* ── Role Toggle ─────────────────────────────────────── */
 .role-toggle {
-  display: inline-flex;
-  gap: 0;
-  border: 1px solid rgba(127,149,209,0.3);
-  border-radius: 999px;
-  padding: 3px;
-  margin-top: 1.5rem;
-  background: rgba(0,0,0,0.4);
+  margin-top: 1rem;
 }
+
 .role-btn {
   background: transparent;
-  border: none;
-  color: rgba(255,255,255,0.5);
-  padding: 0.45rem 1.1rem;
-  border-radius: 999px;
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
+  border: 1px solid #7F95D1;
+  color: white;
+  padding: 6px 12px;
   cursor: pointer;
-  transition: background 0.25s, color 0.25s;
-  white-space: nowrap;
 }
+
 .role-btn.active {
-  background: rgba(127,149,209,0.18);
-  color: #fff;
-}
-.role-btn:hover:not(.active) {
-  color: rgba(255,255,255,0.8);
+  background: #7F95D1;
 }
 
-/* ── Portfolio hover ─────────────────────────────────── */
-.portfolio-item,
-.work-card,
-[class*="portfolio"] a,
-#portfolio .card,
-#portfolio .item {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-.portfolio-item:hover,
-.work-card:hover,
-[class*="portfolio"] a:hover,
-#portfolio .card:hover,
-#portfolio .item:hover {
-  transform: scale(1.025);
-}
-
-/* ── Sketchbook PDF block ────────────────────────────── */
 .sketchbook-pdf-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 2.5rem;
-}
-.sketchbook-pdf {
-  width: 100%;
-  max-width: 760px;
-  height: 520px;
-  border: 1px solid rgba(121,235,231,0.15);
-  border-radius: 8px;
-  background: #0a0a0a;
-}
-.sketchbook-drive-link {
-  font-size: 0.82rem;
-  color: #79EBE7;
-  text-decoration: none;
-  opacity: 0.75;
-  transition: opacity 0.2s;
-  letter-spacing: 0.03em;
-}
-.sketchbook-drive-link:hover { opacity: 1; }
-
-/* ── RPS Game ────────────────────────────────────────── */
-#rps-game {
-  padding: 5rem 2rem;
   text-align: center;
-  background: #000;
-  border-top: 1px solid rgba(255,255,255,0.05);
-}
-.rps-inner { max-width: 520px; margin: 0 auto; }
-.rps-title {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 0.3rem;
-}
-.rps-title em { color: #FFDA4F; font-style: normal; }
-.rps-sub {
-  color: rgba(255,255,255,0.45);
-  font-size: 0.85rem;
-  margin-bottom: 2rem;
-  letter-spacing: 0.05em;
-}
-.rps-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
   margin-bottom: 2rem;
 }
+
+.sketchbook-pdf-block iframe {
+  width: 100%;
+  max-width: 800px;
+  height: 500px;
+}
+
+#rps-game {
+  text-align: center;
+  padding: 40px;
+}
+
 .rps-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.35rem;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 12px;
-  color: #fff;
-  padding: 1rem 1.4rem;
-  font-size: 1.6rem;
+  font-size: 2rem;
+  margin: 10px;
   cursor: pointer;
-  transition: border-color 0.2s, transform 0.2s, background 0.2s;
 }
-.rps-btn span {
-  font-size: 0.65rem;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.45);
-}
-.rps-btn:hover {
-  border-color: rgba(127,149,209,0.5);
-  background: rgba(127,149,209,0.08);
-  transform: scale(1.06);
-}
-.rps-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-@keyframes rps-shake {
-  0%,100% { transform: translateX(0) rotate(0deg); }
-  20% { transform: translateX(-6px) rotate(-4deg); }
-  40% { transform: translateX(6px) rotate(4deg); }
-  60% { transform: translateX(-4px) rotate(-2deg); }
-  80% { transform: translateX(4px) rotate(2deg); }
-}
-.rps-btn.shaking { animation: rps-shake 0.45s ease; }
-.rps-result {
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
-  pointer-events: none;
-}
-.rps-result.show {
-  opacity: 1;
-  transform: none;
-  pointer-events: auto;
-}
-.rps-choices {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
-}
-.rps-choice-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.3rem;
-}
-.rps-label {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.35);
-}
-.rps-icon { font-size: 2.2rem; }
-.rps-vs {
-  font-size: 0.7rem;
-  color: rgba(255,255,255,0.2);
-  letter-spacing: 0.1em;
-}
-.rps-verdict {
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: #fff;
-  min-height: 1.4em;
-}
-.rps-verdict.win  { color: #79EBE7; }
-.rps-verdict.lose { color: #FF8280; }
-.rps-verdict.tie  { color: #FFDA4F; }
-```
+<script>
+/* HERO BACKGROUND */
+const canvas = document.getElementById("hero-canvas");
+const ctx = canvas.getContext("2d");
 
----
+function resize() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+resize();
+window.addEventListener("resize", resize);
 
-## PART 3 — JAVASCRIPT
-Paste the entire block just before `</body>`.
+let mouseX = 0;
+let mouseY = 0;
 
-```js
-(function () {
+document.getElementById("hero").addEventListener("mousemove", e => {
+  mouseX = e.offsetX;
+  mouseY = e.offsetY;
+});
 
-  /* ═══════════════════════════════════════════════
-     UTILITY
-  ════════════════════════════════════════════════ */
-  const $ = id => document.getElementById(id);
-  const clickSound = $('click-sound');
-  function playClick() {
-    if (!clickSound) return;
-    clickSound.currentTime = 0;
-    clickSound.play().catch(() => {});
-  }
+function draw() {
+  ctx.fillStyle = "#000";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  /* ═══════════════════════════════════════════════
-     SMOOTH SCROLL — upgrade all internal links
-  ════════════════════════════════════════════════ */
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
+  ctx.fillStyle = "rgba(127,149,209,0.1)";
+  ctx.beginPath();
+  ctx.arc(mouseX, mouseY, 100, 0, Math.PI * 2);
+  ctx.fill();
+
+  requestAnimationFrame(draw);
+}
+draw();
+
+/* TOGGLE */
+document.querySelectorAll(".role-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".role-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    if (btn.dataset.role === "idd") {
+      document.getElementById("portfolio").scrollIntoView({ behavior: "smooth" });
+    } else {
+      document.getElementById("sketchbook").scrollIntoView({ behavior: "smooth" });
+    }
   });
+});
 
-  /* ═══════════════════════════════════════════════
-     FADE-IN ON SCROLL
-  ════════════════════════════════════════════════ */
-  const fadeSections = document.querySelectorAll('.fade-section');
-  if (fadeSections.length) {
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(en => {
-        if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); }
-      });
-    }, { threshold: 0.12 });
-    fadeSections.forEach(el => io.observe(el));
-  }
+/* RPS GAME */
+const choices = ["rock","paper","scissors"];
 
-  /* ═══════════════════════════════════════════════
-     HERO CANVAS BACKGROUND
-  ════════════════════════════════════════════════ */
-  (function heroCanvas() {
-    const canvas = $('hero-canvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const ACCENT = [
-      { r:127,  g:149, b:209 },
-      { r:255,  g:130, b:128 },
-      { r:255,  g:218, b:79  },
-      { r:121,  g:235, b:231 },
-    ];
-    let W, H, mouse = { x:0, y:0 };
+document.querySelectorAll(".rps-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const user = btn.dataset.choice;
+    const cpu = choices[Math.floor(Math.random()*3)];
 
-    function resize() {
-      const p = canvas.parentElement;
-      W = canvas.width  = p.offsetWidth;
-      H = canvas.height = p.offsetHeight;
-    }
+    let result = "It's a tie!";
+    if (
+      (user==="rock" && cpu==="scissors") ||
+      (user==="paper" && cpu==="rock") ||
+      (user==="scissors" && cpu==="paper")
+    ) result = "You win!";
+    else if (user !== cpu) result = "CPU wins!";
 
-    const ORBS = Array.from({length:5}, (_,i) => ({
-      x: Math.random(), y: Math.random(),
-      r: 0.25 + Math.random()*0.2,
-      vx: (Math.random()-0.5)*0.00008, vy: (Math.random()-0.5)*0.00008,
-      color: ACCENT[i%ACCENT.length],
-      alpha: 0.04 + Math.random()*0.05,
-      phase: Math.random()*Math.PI*2,
-    }));
-
-    const SHAPES = Array.from({length:16}, () => ({
-      x: Math.random(), y: Math.random(),
-      size: 18 + Math.random()*38,
-      vx: (Math.random()-0.5)*0.00014,
-      vy: -0.00006 - Math.random()*0.0001,
-      rot: Math.random()*Math.PI*2, vrot: (Math.random()-0.5)*0.002,
-      type: Math.random()<0.5?'circle':'ring',
-      color: ACCENT[Math.floor(Math.random()*ACCENT.length)],
-      alpha: 0.04 + Math.random()*0.07,
-    }));
-
-    function draw(ts) {
-      ctx.clearRect(0,0,W,H);
-      ctx.fillStyle='#000'; ctx.fillRect(0,0,W,H);
-
-      // faint grid
-      ctx.save(); ctx.strokeStyle='rgba(127,149,209,0.03)'; ctx.lineWidth=1;
-      for(let i=0;i<=10;i++){const x=(W/10)*i;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
-      for(let j=0;j<=8;j++){const y=(H/8)*j;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
-      ctx.restore();
-
-      const MX=mouse.x/W-0.5, MY=mouse.y/H-0.5;
-
-      ORBS.forEach(o=>{
-        o.x+=o.vx; o.y+=o.vy;
-        if(o.x<-0.3)o.x=1.3; if(o.x>1.3)o.x=-0.3;
-        if(o.y<-0.3)o.y=1.3; if(o.y>1.3)o.y=-0.3;
-        const px=o.x*W+MX*30, py=o.y*H+MY*20;
-        const rad=o.r*Math.min(W,H)*(1+0.04*Math.sin(ts*0.0008+o.phase));
-        const g=ctx.createRadialGradient(px,py,0,px,py,rad);
-        const{r,g:gr,b}=o.color;
-        g.addColorStop(0,`rgba(${r},${gr},${b},${o.alpha})`);
-        g.addColorStop(1,`rgba(${r},${gr},${b},0)`);
-        ctx.fillStyle=g; ctx.beginPath(); ctx.arc(px,py,rad,0,Math.PI*2); ctx.fill();
-      });
-
-      SHAPES.forEach(s=>{
-        s.x+=s.vx; s.y+=s.vy; s.rot+=s.vrot;
-        if(s.y<-0.1){s.y=1.1;s.x=Math.random();}
-        if(s.x<-0.1)s.x=1.1; if(s.x>1.1)s.x=-0.1;
-        const px=s.x*W+MX*15, py=s.y*H+MY*10;
-        const{r,g,b}=s.color;
-        ctx.save(); ctx.translate(px,py); ctx.rotate(s.rot); ctx.globalAlpha=s.alpha;
-        ctx.strokeStyle=`rgb(${r},${g},${b})`; ctx.fillStyle=`rgb(${r},${g},${b})`; ctx.lineWidth=1.2;
-        ctx.beginPath(); ctx.arc(0,0,s.type==='ring'?s.size*0.5:s.size*0.3,0,Math.PI*2);
-        s.type==='ring'?ctx.stroke():ctx.fill(); ctx.restore();
-      });
-
-      requestAnimationFrame(draw);
-    }
-
-    const hero = document.getElementById('hero');
-    hero.addEventListener('mousemove', e=>{const r=hero.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;},{passive:true});
-    hero.addEventListener('mouseleave',()=>{mouse.x=W*0.5;mouse.y=H*0.5;},{passive:true});
-    hero.addEventListener('touchmove',e=>{const r=hero.getBoundingClientRect();mouse.x=e.touches[0].clientX-r.left;mouse.y=e.touches[0].clientY-r.top;},{passive:true});
-    hero.querySelectorAll('a,button').forEach(el=>el.addEventListener('click',playClick));
-    window.addEventListener('resize',resize);
-    resize(); mouse.x=W*0.5; mouse.y=H*0.5;
-    requestAnimationFrame(draw);
-  })();
-
-  /* ═══════════════════════════════════════════════
-     ROLE TOGGLE
-  ════════════════════════════════════════════════ */
-  (function roleToggle() {
-    const toggle = $('role-toggle');
-    if (!toggle) return;
-
-    // Selectors — adjust if your actual class names differ
-    const iddItems   = document.querySelectorAll('#portfolio .portfolio-item, #portfolio .work-card, #portfolio .card, #portfolio .item');
-    const artSection = $('sketchbook');
-
-    toggle.querySelectorAll('.role-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        playClick();
-        toggle.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const role = btn.dataset.role;
-
-        if (role === 'idd') {
-          const portfolioEl = document.getElementById('portfolio');
-          if (portfolioEl) portfolioEl.scrollIntoView({ behavior: 'smooth' });
-          iddItems.forEach(el => { el.style.transition='opacity 0.3s,transform 0.3s'; el.style.opacity='1'; el.style.transform='scale(1)'; el.style.pointerEvents=''; });
-          if (artSection) { artSection.style.transition='opacity 0.3s'; artSection.style.opacity='0.25'; }
-        } else {
-          if (artSection) { artSection.scrollIntoView({ behavior: 'smooth' }); artSection.style.transition='opacity 0.3s'; artSection.style.opacity='1'; }
-          iddItems.forEach(el => { el.style.transition='opacity 0.3s,transform 0.3s'; el.style.opacity='0.25'; el.style.transform='scale(0.97)'; el.style.pointerEvents='none'; });
-        }
-      });
-    });
-  })();
-
-  /* ═══════════════════════════════════════════════
-     ROCK PAPER SCISSORS
-  ════════════════════════════════════════════════ */
-  (function rpsGame() {
-    const btns    = document.querySelectorAll('.rps-btn');
-    const result  = $('rps-result');
-    const userIcon= $('rps-user-icon');
-    const cpuIcon = $('rps-cpu-icon');
-    const verdict = $('rps-verdict');
-    if (!btns.length || !result) return;
-
-    const EMOJI = { rock:'🪨', paper:'📄', scissors:'✂️' };
-    const CHOICES = ['rock','paper','scissors'];
-    const WINS = { rock:'scissors', paper:'rock', scissors:'paper' };
-
-    btns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        playClick();
-        const user = btn.dataset.choice;
-
-        // Disable all, shake
-        btns.forEach(b => { b.disabled = true; b.classList.remove('shaking'); });
-        void btn.offsetWidth; // force reflow
-        btns.forEach(b => b.classList.add('shaking'));
-
-        // Hide previous result
-        result.classList.remove('show');
-
-        setTimeout(() => {
-          const cpu = CHOICES[Math.floor(Math.random()*3)];
-          userIcon.textContent = EMOJI[user];
-          cpuIcon.textContent  = EMOJI[cpu];
-
-          let msg, cls;
-          if (user === cpu)           { msg='Tie — great minds!'; cls='tie'; }
-          else if (WINS[user]===cpu)  { msg='You win! 🎉';        cls='win'; }
-          else                        { msg='CPU wins this one.'; cls='lose'; }
-
-          verdict.textContent = msg;
-          verdict.className   = 'rps-verdict ' + cls;
-          result.classList.add('show');
-          playClick();
-
-          // Re-enable after short pause
-          setTimeout(() => { btns.forEach(b => { b.disabled=false; b.classList.remove('shaking'); }); }, 600);
-        }, 600);
-      });
-    });
-  })();
-
-  /* ═══════════════════════════════════════════════
-     PORTFOLIO CARD HOVER — fallback if CSS selector
-     doesn't match. Applies to whatever grid items exist.
-  ════════════════════════════════════════════════ */
-  (function portfolioHover() {
-    const grid = document.getElementById('portfolio');
-    if (!grid) return;
-    grid.querySelectorAll('a, article, li, .card, .item, [class*="work"], [class*="portfolio"]').forEach(el => {
-      if (el.closest('#portfolio') !== grid && el.closest('#portfolio') !== el) return;
-      el.style.transition = 'transform 0.25s ease';
-      el.addEventListener('mouseenter', () => el.style.transform='scale(1.025)');
-      el.addEventListener('mouseleave', () => el.style.transform='scale(1)');
-    });
-  })();
-
-})();
-```
-
----
-
-## PASTE LOCATIONS SUMMARY
-
-| Code | Where |
-|---|---|
-| `<canvas id="hero-canvas">` | First child inside `#hero` |
-| `.role-toggle` div | After hero CTA buttons, still inside `#hero` |
-| `id="sketchbook"` | Add attribute to existing sketchbook section tag |
-| `.sketchbook-pdf-block` div | Top of sketchbook section inner content |
-| `#rps-game` section | Immediately after closing `</section>` of `#portfolio` |
-| CSS block | Inside `<style>` or new `<style>` before `</head>` |
-| JS block | Just before `</body>` |
+    document.getElementById("rps-result").textContent =
+      `You: ${user} | CPU: ${cpu} → ${result}`;
+  });
+});
+</script>
