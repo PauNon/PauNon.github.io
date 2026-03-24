@@ -480,41 +480,48 @@
     /* ── RPS Popup overlay ── */
     #rps-popup {
       position: fixed;
-      bottom: -520px;
-      right: 2rem;
-      z-index: 300;
-      width: 340px;
-      background: #0d0d0d;
-      border: 1px solid rgba(168,85,247,0.3);
-      border-radius: 20px;
-      box-shadow: 0 8px 48px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.04);
-      padding: 2.8rem 1.6rem 1.6rem;
+      bottom: -600px;
+      right: 1.5rem;
+      z-index: 9999;
+      width: 260px;
+      background: #111;
+      border: 1px solid rgba(168,85,247,0.4);
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.9);
+      padding: 1rem 1rem 1.2rem;
       text-align: center;
-      transition: bottom 0.55s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+      transition: bottom 0.5s cubic-bezier(0.34,1.4,0.64,1), opacity 0.35s ease;
       pointer-events: none;
       opacity: 0;
-      position: fixed;
     }
     #rps-popup.visible {
-      bottom: 2rem;
+      bottom: 1.5rem;
       pointer-events: auto;
       opacity: 1;
     }
-    .rps-popup-dismiss {
-      display: block;
-      width: 100%;
-      text-align: right;
-      background: none;
-      border: none;
-      color: rgba(255,255,255,0.5);
-      font-size: 1rem;
-      cursor: pointer;
-      padding: 0 0 0.6rem 0;
-      margin: 0;
-      line-height: 1;
-      transition: color 0.2s;
+    .rps-popup-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
     }
-    .rps-popup-dismiss:hover { color: #fff; }
+    .rps-popup-dismiss {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 0.75rem;
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .rps-popup-dismiss:hover { background: rgba(255,255,255,0.25); }
     .rps-idle-hint {
       font-size: 0.62rem;
       letter-spacing: 0.1em;
@@ -1256,45 +1263,45 @@
      ROCK PAPER SCISSORS — idle popup
 ══════════════════════════════════════════════════ -->
 <div id="rps-popup" role="dialog" aria-label="Quick Game">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
-    <p class="rps-idle-hint" style="margin:0;">You look bored ✦</p>
+  <div class="rps-popup-topbar">
+    <p class="rps-idle-hint" style="margin:0;font-size:0.6rem;">Hope you're not bored ✦</p>
     <button class="rps-popup-dismiss" id="rps-dismiss" aria-label="Close">✕</button>
   </div>
-  <h2 class="rps-title">Quick Game <em>✦</em></h2>
-  <p class="rps-sub">Rock, Paper, or Scissors?</p>
-  <div class="rps-score" id="rps-score">
-    <div class="rps-score-block">
+  <h2 class="rps-title" style="font-size:1.1rem;margin-bottom:0.15rem;">How 'Bout A Quick Game<em>✦</em></h2>
+  <p class="rps-sub" style="font-size:0.65rem;margin-bottom:0.8rem;">Rock, Paper, or Scissors?</p>
+  <div class="rps-score" id="rps-score" style="margin-bottom:0.6rem;">
+    <div class="rps-score-block" style="padding:0.4rem 1rem;">
       <span class="rps-score-label">You</span>
-      <span class="rps-score-num" id="score-win">0</span>
+      <span class="rps-score-num" id="score-win" style="font-size:1.1rem;">0</span>
     </div>
-    <div class="rps-score-block rps-score-mid">
+    <div class="rps-score-block rps-score-mid" style="padding:0.4rem 1rem;">
       <span class="rps-score-label">Ties</span>
-      <span class="rps-score-num" id="score-tie">0</span>
+      <span class="rps-score-num" id="score-tie" style="font-size:1.1rem;">0</span>
     </div>
-    <div class="rps-score-block">
+    <div class="rps-score-block" style="padding:0.4rem 1rem;">
       <span class="rps-score-label">CPU</span>
-      <span class="rps-score-num" id="score-lose">0</span>
+      <span class="rps-score-num" id="score-lose" style="font-size:1.1rem;">0</span>
     </div>
   </div>
-  <button class="rps-reset" id="rps-reset">Reset</button>
-  <div class="rps-buttons">
-    <button class="rps-btn" data-choice="rock">🪨<span>Rock</span></button>
-    <button class="rps-btn" data-choice="paper">📄<span>Paper</span></button>
-    <button class="rps-btn" data-choice="scissors">✂️<span>Scissors</span></button>
+  <button class="rps-reset" id="rps-reset" style="margin-bottom:0.8rem;font-size:0.6rem;padding:0.2rem 0.7rem;">Reset</button>
+  <div class="rps-buttons" style="gap:0.5rem;margin-bottom:0.8rem;">
+    <button class="rps-btn" data-choice="rock" style="padding:0.7rem 0.6rem;font-size:1.2rem;min-width:unset;flex:1;">🪨<span>Rock</span></button>
+    <button class="rps-btn" data-choice="paper" style="padding:0.7rem 0.6rem;font-size:1.2rem;min-width:unset;flex:1;">📄<span>Paper</span></button>
+    <button class="rps-btn" data-choice="scissors" style="padding:0.7rem 0.6rem;font-size:1.2rem;min-width:unset;flex:1;">✂️<span>Scissors</span></button>
   </div>
   <div class="rps-result" id="rps-result" aria-live="polite">
     <div class="rps-choices">
       <div class="rps-choice-block">
         <span class="rps-label">You</span>
-        <span class="rps-icon" id="rps-user-icon">—</span>
+        <span class="rps-icon" id="rps-user-icon" style="font-size:1.6rem;">—</span>
       </div>
       <div class="rps-vs">vs</div>
       <div class="rps-choice-block">
         <span class="rps-label">CPU</span>
-        <span class="rps-icon" id="rps-cpu-icon">—</span>
+        <span class="rps-icon" id="rps-cpu-icon" style="font-size:1.6rem;">—</span>
       </div>
     </div>
-    <p class="rps-verdict" id="rps-verdict"></p>
+    <p class="rps-verdict" id="rps-verdict" style="font-size:0.85rem;"></p>
   </div>
 </div>
 
