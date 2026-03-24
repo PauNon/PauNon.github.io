@@ -859,6 +859,110 @@
       z-index: -1;
     }
 
+
+    /* ══════════════════════════════════════════════════
+       COLOR POPS — making it fun ✦
+    ══════════════════════════════════════════════════ */
+
+    /* Ticker — colored dots between items */
+    .ticker-track { gap: 1.8rem; }
+    .ticker-track span:nth-child(odd)  { color: rgba(255,255,255,0.6); }
+    .ticker-track span:nth-child(4n+1) { color: var(--blue); }
+    .ticker-track span:nth-child(4n+3) { color: var(--pink); }
+
+    /* Hero eyebrow — aqua */
+    .hero-eyebrow { color: var(--aqua); opacity: 0.85; }
+
+    /* Stat blocks — colored value numbers */
+    .stat-value { color: var(--yellow); }
+    .hero-stats .stat-block:nth-child(2) .stat-value { color: var(--aqua); }
+    .hero-stats .stat-block:nth-child(3) .stat-value { color: var(--pink); }
+    .hero-stats .stat-block:nth-child(4) .stat-value { color: var(--blue); }
+
+    /* Skill tags — cycle accent colors */
+    .skill-tag:nth-child(3n+1) { border-color: rgba(127,149,209,0.35); color: var(--blue); background: rgba(127,149,209,0.07); }
+    .skill-tag:nth-child(3n+2) { border-color: rgba(255,130,128,0.35); color: var(--pink); background: rgba(255,130,128,0.07); }
+    .skill-tag:nth-child(3n+3) { border-color: rgba(121,235,231,0.35); color: var(--aqua); background: rgba(121,235,231,0.07); }
+
+    /* Hero summary — colored labels */
+    .summary-label { color: var(--yellow); letter-spacing: 0.12em; }
+
+    /* Section eyebrows — pink */
+    .section-eyebrow { color: var(--pink); }
+    .sketchbook-eyebrow { color: var(--aqua); }
+
+    /* Section title em — already pink, make more vivid */
+    .section-title em { color: var(--pink); font-style: italic; }
+
+    /* Portfolio card tags — blue */
+    .card-tag { color: var(--aqua); }
+
+    /* Portfolio card hover — colored top border flash */
+    .portfolio-card {
+      border-top: 2px solid transparent;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .portfolio-card:nth-child(3n+1):hover { border-top-color: var(--blue); }
+    .portfolio-card:nth-child(3n+2):hover { border-top-color: var(--pink); }
+    .portfolio-card:nth-child(3n+3):hover { border-top-color: var(--yellow); }
+
+    /* RPS title */
+    .rps-title { color: #fff; }
+    .rps-title em { color: var(--yellow); }
+    .rps-sub { color: var(--aqua); opacity: 0.7; }
+
+    /* Score numbers — colored */
+    #score-win  { color: var(--aqua); }
+    #score-lose { color: var(--pink); }
+    #score-tie  { color: var(--yellow); }
+
+    /* Interest tags — cycle colors */
+    .interest-tag:nth-child(4n+1) { border-color: rgba(127,149,209,0.3); color: var(--blue); background: rgba(127,149,209,0.07); }
+    .interest-tag:nth-child(4n+2) { border-color: rgba(255,130,128,0.3); color: var(--pink); background: rgba(255,130,128,0.07); }
+    .interest-tag:nth-child(4n+3) { border-color: rgba(255,218,79,0.3);  color: var(--yellow); background: rgba(255,218,79,0.07); }
+    .interest-tag:nth-child(4n+4) { border-color: rgba(121,235,231,0.3); color: var(--aqua); background: rgba(121,235,231,0.07); }
+
+    /* About section title */
+    .about-title em { color: var(--pink); }
+    .about-sub em   { color: var(--yellow); }
+    .about-sub      { color: rgba(255,255,255,0.8); }
+
+    /* Contact links — colored icons */
+    .contact-link:nth-child(1) .contact-icon { color: var(--pink); }
+    .contact-link:nth-child(2) .contact-icon { color: var(--yellow); }
+    .contact-link:nth-child(3) .contact-icon { color: var(--aqua); }
+    .contact-link:nth-child(4) .contact-icon { color: var(--blue); }
+    .contact-link:hover { border-color: rgba(255,218,79,0.3); }
+
+    /* Experience — colored left accent bar per item */
+    .exp-item { border-left: 3px solid transparent; padding-left: 1rem; border-bottom: 1px solid var(--border); }
+    .exp-item:nth-child(3n+1) { border-left-color: rgba(127,149,209,0.4); }
+    .exp-item:nth-child(3n+2) { border-left-color: rgba(255,130,128,0.4); }
+    .exp-item:nth-child(3n+3) { border-left-color: rgba(255,218,79,0.4); }
+
+    /* Experience badge */
+    .exp-badge { background: rgba(255,218,79,0.12); color: var(--yellow); border-color: rgba(255,218,79,0.25); }
+
+    /* Education dates */
+    .edu-date { color: var(--blue); }
+
+    /* Footer logo em already aqua — add color to copyright */
+    .footer-copy { color: rgba(255,255,255,0.35); }
+    footer { border-top: 1px solid rgba(127,149,209,0.15); }
+
+    /* Nav hover — colored */
+    .nav-links a:hover { color: var(--aqua); }
+
+    /* Section dividers — subtle colored top border */
+    #portfolio  { border-top: 1px solid rgba(127,149,209,0.15); }
+    #rps-game   { border-top: 1px solid rgba(255,130,128,0.15); }
+    #sketchbook { border-top: 1px solid rgba(255,218,79,0.15); }
+    #about      { border-top: 1px solid rgba(121,235,231,0.15); }
+    #experience { border-top: 1px solid rgba(127,149,209,0.15); }
+
+    /* Sketchbook items — colored caption on hover */
+    .sketchbook-item:hover span { color: var(--pink); }
+
   </style>
 </head>
 <body>
@@ -992,7 +1096,7 @@
          data-url="https://360.articulate.com/review/content/144484bb-27cc-49a8-9cb0-2fd3ae0fd04f/review"
          data-title="Interactive E-Learning Module I">
       <div class="card-thumb">
-        <img src="https://paunon.github.io/thumb-storyline1.jpg" alt="Storyline: Call to Leaders" loading="lazy" />
+        <img src="https://paunon.github.io/thumb-storyline1.jpg" alt="Storyline Module I" loading="lazy" />
         <div class="card-preview-btn">▶ Preview</div>
       </div>
       <div class="card-body">
@@ -1007,7 +1111,7 @@
          data-url="https://360.articulate.com/review/content/9ef28edb-e33c-450f-840e-1398d2c7eb81/review"
          data-title="Interactive Module II">
       <div class="card-thumb">
-        <img src="https://paunon.github.io/thumb-storyline2.jpg" alt="Storyline: Drag and Drop" loading="lazy" />
+        <img src="https://paunon.github.io/thumb-storyline2.jpg" alt="Storyline Module II" loading="lazy" />
         <div class="card-preview-btn">▶ Preview</div>
       </div>
       <div class="card-body">
