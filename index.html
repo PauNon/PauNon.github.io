@@ -515,6 +515,60 @@
     .rps-verdict.win  { color: var(--aqua); }
     .rps-verdict.lose { color: var(--pink); }
     .rps-verdict.tie  { color: var(--yellow); }
+    .rps-score {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 1.8rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      overflow: hidden;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .rps-score-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.15rem;
+      padding: 0.65rem 1.8rem;
+      background: rgba(255,255,255,0.03);
+    }
+    .rps-score-mid {
+      border-left: 1px solid rgba(255,255,255,0.08);
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .rps-score-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+    .rps-score-num {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1;
+      color: #fff;
+      transition: transform 0.15s ease;
+    }
+    .rps-score-num.bump {
+      transform: scale(1.35);
+    }
+    .rps-reset {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.3);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      cursor: pointer;
+      margin-bottom: 1.8rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .rps-reset:hover { color: rgba(255,255,255,0.7); border-color: rgba(255,255,255,0.3); }
 
     /* ══════════════════════════════════════════════════
        SKETCHBOOK
@@ -729,7 +783,12 @@
 <body>
 
 <!-- ── Audio ────────────────────────────────────────── -->
-<audio id="click-sound" preload="auto" src="https://paunon.github.io/click.mp3"></audio>
+<!-- RPS Audio -->
+<audio id="snd-rock"     preload="auto" src="rock.mp3"></audio>
+<audio id="snd-paper"    preload="auto" src="paper.mp3"></audio>
+<audio id="snd-scissors" preload="auto" src="scissors.mp3"></audio>
+<audio id="snd-win"      preload="auto" src="win.mp3"></audio>
+<audio id="snd-error"    preload="auto" src="error.mp3"></audio>
 
 <!-- ── Nav ──────────────────────────────────────────── -->
 <nav>
@@ -954,6 +1013,21 @@
   <div class="rps-inner">
     <h2 class="rps-title">Quick Game <em>✦</em></h2>
     <p class="rps-sub">Rock, Paper, or Scissors?</p>
+    <div class="rps-score" id="rps-score">
+      <div class="rps-score-block">
+        <span class="rps-score-label">You</span>
+        <span class="rps-score-num" id="score-win">0</span>
+      </div>
+      <div class="rps-score-block rps-score-mid">
+        <span class="rps-score-label">Ties</span>
+        <span class="rps-score-num" id="score-tie">0</span>
+      </div>
+      <div class="rps-score-block">
+        <span class="rps-score-label">CPU</span>
+        <span class="rps-score-num" id="score-lose">0</span>
+      </div>
+    </div>
+    <button class="rps-reset" id="rps-reset">Reset</button>
     <div class="rps-buttons">
       <button class="rps-btn" data-choice="rock">🪨<span>Rock</span></button>
       <button class="rps-btn" data-choice="paper">📄<span>Paper</span></button>
@@ -1204,22 +1278,15 @@
   const $ = id => document.getElementById(id);
 
   /* ── Sound ── */
-  let audioCtx = null;
-  function playClick() {
+  function playSound(id) {
     try {
-      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.connect(gain); gain.connect(audioCtx.destination);
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(880, audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 0.08);
-      gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
-      osc.start(audioCtx.currentTime);
-      osc.stop(audioCtx.currentTime + 0.12);
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.currentTime = 0;
+      el.play().catch(() => {});
     } catch(e) {}
   }
+  function playClick() { /* no-op generic click — RPS uses specific sounds */ }
 
   /* ── Smooth scroll ── */
   document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -1426,36 +1493,59 @@
      ROCK PAPER SCISSORS
   ══════════════════════════════════════════════ */
   (function rpsGame() {
-    const btns     = document.querySelectorAll('.rps-btn');
-    const result   = $('rps-result');
-    const userIcon = $('rps-user-icon');
-    const cpuIcon  = $('rps-cpu-icon');
-    const verdict  = $('rps-verdict');
+    const btns      = document.querySelectorAll('.rps-btn');
+    const result    = $('rps-result');
+    const userIcon  = $('rps-user-icon');
+    const cpuIcon   = $('rps-cpu-icon');
+    const verdict   = $('rps-verdict');
+    const scoreWin  = $('score-win');
+    const scoreTie  = $('score-tie');
+    const scoreLose = $('score-lose');
+    const resetBtn  = $('rps-reset');
     if (!btns.length || !result || !userIcon || !cpuIcon || !verdict) return;
 
     const EMOJI   = { rock:'🪨', paper:'📄', scissors:'✂️' };
     const CHOICES = ['rock', 'paper', 'scissors'];
     const WINS    = { rock:'scissors', paper:'rock', scissors:'paper' };
     let busy = false;
+    let wins = 0, ties = 0, losses = 0;
+
+    function bump(el) {
+      if (!el) return;
+      el.classList.remove('bump');
+      void el.offsetWidth;
+      el.classList.add('bump');
+      setTimeout(() => el.classList.remove('bump'), 200);
+    }
+
+    function updateScore() {
+      if (scoreWin)  scoreWin.textContent  = wins;
+      if (scoreTie)  scoreTie.textContent  = ties;
+      if (scoreLose) scoreLose.textContent = losses;
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        wins = 0; ties = 0; losses = 0;
+        updateScore();
+        result.classList.remove('show');
+        verdict.textContent = '';
+        verdict.className = 'rps-verdict';
+      });
+    }
 
     btns.forEach(btn => {
       btn.addEventListener('click', () => {
         if (busy) return;
         busy = true;
-        playClick();
 
         const user = btn.dataset.choice;
+        // Play the choice sound immediately on click
+        playSound('snd-' + user);
 
-        // Disable + shake all buttons
-        btns.forEach(b => {
-          b.disabled = true;
-          b.classList.remove('shaking');
-        });
-        // Force reflow so animation restarts
+        btns.forEach(b => { b.disabled = true; b.classList.remove('shaking'); });
         void btns[0].offsetWidth;
         btns.forEach(b => b.classList.add('shaking'));
-
-        // Hide previous result
         result.classList.remove('show');
 
         setTimeout(() => {
@@ -1463,17 +1553,27 @@
           userIcon.textContent = EMOJI[user];
           cpuIcon.textContent  = EMOJI[cpu];
 
-          let msg, cls;
-          if (user === cpu)             { msg = 'Tie — great minds!'; cls = 'tie'; }
-          else if (WINS[user] === cpu)  { msg = 'You win! 🎉';        cls = 'win'; }
-          else                          { msg = 'CPU wins this one.'; cls = 'lose'; }
+          let msg, cls, resultSnd;
+          if (user === cpu) {
+            msg = 'Tie — great minds!'; cls = 'tie'; resultSnd = null;
+            ties++;
+            bump(scoreTie);
+          } else if (WINS[user] === cpu) {
+            msg = 'You win! 🎉'; cls = 'win'; resultSnd = 'snd-win';
+            wins++;
+            bump(scoreWin);
+          } else {
+            msg = 'CPU wins this one.'; cls = 'lose'; resultSnd = 'snd-error';
+            losses++;
+            bump(scoreLose);
+          }
 
           verdict.textContent = msg;
           verdict.className   = 'rps-verdict ' + cls;
           result.classList.add('show');
-          playClick();
+          updateScore();
+          if (resultSnd) playSound(resultSnd);
 
-          // Re-enable
           setTimeout(() => {
             btns.forEach(b => { b.disabled = false; b.classList.remove('shaking'); });
             busy = false;
